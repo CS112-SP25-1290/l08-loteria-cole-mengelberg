@@ -1,6 +1,8 @@
 package edu.miracosta.cs112.lotaria;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -13,6 +15,9 @@ import javafx.scene.text.Font;
 
 import javafx.scene.layout.VBox;
 import javafx.geometry.Pos;
+
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 
 public class Main extends Application {
     //CONSTANTS
@@ -28,6 +33,7 @@ public class Main extends Application {
     private ImageView cardImageView;
     private Button drawCardButton;
 //    private ProgressBar gameProgressBar;
+    private int count = 0;
 
     //GUI METHODS
     public static void main(String[] args) {
@@ -50,8 +56,22 @@ public class Main extends Application {
         cardImageView.setImage(tempCard.getImage());
         cardImageView.setFitWidth(300);
         cardImageView.setPreserveRatio(true);
+
         messageLabel.setWrapText(true);
         messageLabel.setTextAlignment(TextAlignment.CENTER);
+
+        //ADD EVENT HANDLING
+        drawCardButton.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+               public void handle(ActionEvent event) {
+    //            count++;
+                       int cardNum = (int) (Math.random() * LOTERIA_CARDS.length);
+                       LoteriaCard drawnCard = LOTERIA_CARDS[cardNum];
+                       cardImageView.setImage(drawnCard.getImage());
+                       messageLabel.setText(drawnCard.getCardName());
+               }
+            }
+        );
 
         //SETUP LAYOUT
         VBox mainLayout = new VBox();
